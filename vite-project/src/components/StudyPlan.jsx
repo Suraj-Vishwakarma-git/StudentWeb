@@ -11,12 +11,11 @@ const [tasks,settasks]=useState([])
 
   return (
     <div id='main'>
-
       <div className="top">
         <h2>✏️ Study Plan</h2>
         <div className="topbtns">
         <button className="addBtn" style={{marginRight:"10px"}} onClick={()=>setShowModal(true)}>
-          + Add Work
+          + Add Subject
         </button>
         <Link to="/homee">
         <button className="addBtn" onClick={()=>setShowModal(true)}>
@@ -31,10 +30,10 @@ const [tasks,settasks]=useState([])
           tasks.map((e,i)=>(
             <div className="content" key={i}>
               <h3 className="title">{e}</h3>
-
               <div className="taskBtns">
                 <button className="delete">Delete</button>
-                <button className="edit">Edit</button>
+                <button className="edit">See Topics</button>
+                <input type='checkbox' id='checkbox' />
               </div>
 
             </div>
@@ -44,17 +43,14 @@ const [tasks,settasks]=useState([])
 
       {showModal && (
         <div className="overlay">
-
           <div className="modal">
-
-            <h3>Add Work</h3>
-
+            <h2 id='titleOfWin'>Add Subject</h2>
             <div className="inputfields">
-
+              
               <input
                 id='inputt'
                 type='text'
-                placeholder='Enter your task...'
+                placeholder='Enter your Subject...'
                 value={task}
                 onChange={(e)=>settask(e.target.value)}
               />
