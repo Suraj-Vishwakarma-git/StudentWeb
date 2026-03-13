@@ -1,14 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import img from "./loginGemi.png";
 import "./Login.css";
 import { Link } from "react-router-dom";
 
 const Login = () => {
+
+  const [email,setemail]=useState("");
+  const [password,setpassword]=useState("");
+ 
+  async function login(){
+    const API=await fetch("http://localhost:3000/study/login",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({email,password})
+    });
+    const data=await API.json();
+    alert(data.message);
+  }
+
+
   return (
     <div className="login-container">
       <img src={img} className="login-image" />
 
-      <form className="login-form">
+      <div className="login-form">
 
         <span style={{display:"flex", alignItems:"center", gap:"10px"}}>
           <h2 style={{margin:0}}>Create New Account</h2>
@@ -30,17 +45,19 @@ const Login = () => {
           type="email"
           placeholder="Enter your Email"
           className="input"
+          onChange={(e)=>setemail(e.target.value)}
         />
 
         <input
           type="password"
           placeholder="Enter your Password"
           className="input"
+          onChange={(e)=>setpassword(e.target.value)}
         />
 
-        <button className="login-btn">Login</button>
+        <button className="login-btn" onClick={login}>Login</button>
 
-      </form>
+      </div>
     </div>
   );
 };

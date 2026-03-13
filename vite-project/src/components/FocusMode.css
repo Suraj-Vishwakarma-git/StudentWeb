@@ -1,0 +1,120 @@
+#focus-container{
+    min-height: 80vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:40px;
+    color:rgb(0, 0, 0);
+    font-family: "Segoe UI",sans-serif;
+}
+
+.title{
+    font-size:2rem;
+    font-weight:800;
+}
+
+.timer{
+
+    width:min(250px,50vw);
+    aspect-ratio:1/1;
+    border-radius:50%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    background-color: rgb(255, 255, 255);
+    border:15px solid #3588ee;
+    box-shadow:
+    0 0 30px rgba(0, 166, 255, 0.5),
+    inset 0 0 20px rgba(85, 255, 0, 0.05);
+}
+
+.time{
+    font-size:4rem;
+    letter-spacing:3px;
+}
+
+.startBtn{
+    margin-bottom:40px;
+    font-size:1rem;
+    border:none;
+    border-radius:30px;
+    background:#3b82f6;
+    color:white;
+    cursor:pointer;
+    transition:all 0.3s;
+}
+
+.startBtn:hover{
+    background:#2563eb;
+    transform:scale(1.05);
+}
+
+#reset{
+      font-size:2rem;
+    font-weight:700;
+
+}
+
+.controls{
+
+    display:flex;
+    gap:20px;
+
+}
+
+.controls button{
+
+    padding:12px 25px;
+    border:none;
+    border-radius:25px;
+    font-size:0.9rem;
+    background:#1e293b;
+    color:white;
+    cursor:pointer;
+    transition:all 0.25s;
+}
+
+.controls button:hover{
+
+    background:#334155;
+
+    transform:translateY(-2px);
+
+}
+
+#image{
+    display: none;
+}
+
+@media(min-width:768px){
+    #image{
+        display: block;
+        height: 30%;
+        width: 40%;
+    }
+    #focus-container{
+        flex-direction: row;
+        justify-content: space-evenly;
+    }
+}
+
+.box{
+    flex-direction: column;
+    display: flex;
+    gap: 30px;
+}
+
+#backbutton{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size:1.5rem;
+    height:50px;
+    border-radius: 30px;
+    width: 310px;
+
+
+}
