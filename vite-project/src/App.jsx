@@ -4,6 +4,7 @@ import About from "./components/About.jsx";
 import Login from "./components/Login.jsx";
 import Header from "./components/Header.jsx";
 import Main from "./components/Main.jsx";
+import StudyPlan from "./components/StudyPlan.jsx";
 import FocusMode from "./components/FocusMode.jsx";
 import { useContext } from "react";
 import { UserContext } from "./UserContext.jsx";
@@ -13,15 +14,14 @@ import "./App.css";
 function App() {
 
   const { setUser } = useContext(UserContext);
-
  
-
   return (
     <>
       <BrowserRouter>
 
         <Header />
         <Routes>
+          <Route path="/studyplan" element={<StudyPlan/>}/>
           <Route path="/focusmode" element={<FocusMode/>}/>
           <Route path="/homee" element={<Main/>}/>
           <Route path="/signup" element={<Signup/>}/>

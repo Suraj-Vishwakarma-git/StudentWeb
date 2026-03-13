@@ -56,8 +56,17 @@ const Main = () => {
    <div className="quickActions">
     <h2 id='quickmeg'>Quick Actions</h2>
     <div className="quickGrid">
-    <Link to="/focusmode"><div className="quickBox"><span className="icon">🎯</span>Focus Mode</div></Link>
-    <div className="quickBox"> <span className="icon">📚</span>Study Plan</div>
+
+    <Link to="/focusmode">
+    <div className="quickBox">
+    <span className="icon">🎯</span>Focus Mode</div>
+    </Link>
+
+     <Link to="/studyplan">
+    <div className="quickBox">
+    <span className="icon">📚</span>Study Plan</div>
+    </Link>
+   
     <div className="quickBox"><span className="icon">📅</span>Add Exam</div>
     <div className="quickBox"><span className="icon">✅</span>To Do List</div>
 
