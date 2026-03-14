@@ -8,6 +8,16 @@
     justify-content: center;
 }
 
+#main{
+    margin-top: 30px;
+    width:90vw;
+    min-height:90vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:flex-start;
+}
+
 #checkbox{
     height:30px;
     width: 30px;
@@ -67,6 +77,8 @@
     justify-content: center;
     gap:15px;
 }
+
+
 
 
 .content{
@@ -139,6 +151,7 @@
 }
 
 
+
 #inputt{
     width:80%;
     height:40px;
@@ -192,4 +205,20 @@
     width:100%;
 }
 
+}
+
+.maintopic{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    margin-right: 20px;
+    text-align: center;
+    padding: 15px;
+    border-radius: 20px;
+    background: #ededed;
+    font-size: large;
+    font-weight: 800;
+}
+.topicsXX{
+    margin: -20px;
 }
