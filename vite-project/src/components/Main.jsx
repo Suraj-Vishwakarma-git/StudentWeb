@@ -67,9 +67,11 @@ const Main = () => {
     <span className="icon">📚</span>Study Plan</div>
     </Link>
    
-    <div className="quickBox"><span className="icon">📅</span>Add Exam</div>
-    <div className="quickBox"><span className="icon">✅</span>To Do List</div>
-
+   <Link to="/addexam" className="quickBox" id='lastBox'>
+    <div>
+    <span className="icon">📅</span>
+    Add Exam</div>
+    </Link>
 </div>
 
     </div>
