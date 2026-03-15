@@ -2,15 +2,99 @@ import React, { useState } from 'react'
 import "./StudyPlan.css"
 import img from "./studyplangemi2.png"
 import { Link } from 'react-router-dom'
+import { useEffect } from 'react'
 
 const StudyPlan = () => {
 
 const [showModal,setShowModal]=useState(false)
-const [task,settask]=useState("")
-const [tasks,settasks]=useState([])
-const [topic,setTopic]=useState("")
 const [showTopicModal,setShowTopicModal]=useState(false)
-const [selectedIndex,setSelectedIndex]=useState(null)
+const [showTopic,setShowTopic]=useState(false)
+
+
+const [topiclist,settopiclist]=useState([]);
+const [topic,settopic]=useState("");
+const [subId,setsubId]=useState(null);
+const [subject,setsubject]=useState([]);
+const [newSubject,setNewSubject] = useState("");
+
+
+
+
+  async function getSubjects(){
+     const token = localStorage.getItem("token");
+     const API=await fetch("http://localhost:4000/allsubjects",{
+        headers:{
+          Authorization:`Bearer ${token}`
+       }
+});
+      const data=await API.json();
+      if(data.subjects){
+        setsubject(data.subjects);
+      }
+  }
+  getSubjects();
+
+
+  async function getTopics(SubjId){
+     const token = localStorage.getItem("token");
+     const API=await fetch("http://localhost:4000/alltopics",{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json",
+        Authorization:`Bearer ${token}`
+      },
+      body:JSON.stringify({subjectId:SubjId})
+     });
+     const data=await API.json();
+     if(data.topics){
+      settopiclist(data.topics);
+     }
+  }
+async function addSubject(subject){
+  const token=localStorage.getItem("token");
+  const API=await fetch("http://localhost:4000/addsubject",{
+    method:"POST",
+    headers:{
+      "Content-Type":"application/json",
+      Authorization:`Bearer ${token}`
+    },
+    body:JSON.stringify({subject})
+  });
+   setShowModal(false);
+  getSubjects();
+}
+
+
+async function addTopics() {
+  const token=localStorage.getItem("token");
+  const API=await fetch("http://localhost:4000/subjecttopic",{
+    method:"POST",
+    headers:{
+      "Content-Type":"application/json",
+      Authorization:`Bearer ${token}`
+    },
+    body:JSON.stringify({topic:topic,subjectId:subId})
+  });
+  await getTopics(subId);
+  settopic("");
+  setsubId(null);
+  setShowTopicModal(false);
+}
+
+async function deleteSub(subId){
+  const token=localStorage.getItem("token");
+  const API=await  fetch("http://localhost:4000/deletesubject",{
+    method:"DELETE",
+     headers:{
+      "Content-Type":"application/json",
+      Authorization:`Bearer ${token}`
+    },
+    body:JSON.stringify({subjectId:subId})
+  });
+  getSubjects();
+}
+
+
 
   return (
     <div id='main'>
@@ -21,7 +105,7 @@ const [selectedIndex,setSelectedIndex]=useState(null)
           + Add Subject
         </button>
         <Link to="/homee">
-        <button className="addBtn" onClick={()=>setShowModal(true)}>
+        <button className="addBtn">
           Back
         </button>
         </Link>
@@ -30,29 +114,20 @@ const [selectedIndex,setSelectedIndex]=useState(null)
 
         <div className="mainContent">
         {
-          tasks.map((e,i)=>(
-            <div className="content" key={i}>
-              <h3 className="title">{e.Subject}</h3>
-              <div className="maintopic">
-              <p>Topic List</p>
-              
-              {
-                e.topic.map((t,i)=>(
-               <div className="topicsXX">
-                  <h5>{t}</h5>
-              </div> 
-                ))
-               
-              }
-              
-              </div>
-              <div className="taskBtns">
-                <button className="delete">Delete</button>
-                <button className="edit"
-                onClick={()=>{
-                  setSelectedIndex(i)
-                  setShowTopicModal(true)}
-                }
+          subject.map((e,i)=>(
+            <div className="content" key={e._id}>
+              <h3 className="title">{e.subject}</h3>
+                     
+            <div className="taskBtns">
+                <button className="delete" onClick={()=>{deleteSub(e._id)}}>Delete</button>
+                <button className="edit" onClick={()=>{
+                  setShowTopic(true)
+                  getTopics(e._id)
+                }}>CheckTopicList</button>
+                <button className="edit" onClick={()=>{
+                  setShowTopicModal(true)
+                  setsubId(e._id)
+                }}
                 >Set Topics</button>
                 <input type='checkbox' id='checkbox' />
               </div>
@@ -61,36 +136,47 @@ const [selectedIndex,setSelectedIndex]=useState(null)
         }
       </div>
 
+      {showTopic && (
+         <div className="overlay">
+          <div className="modal">
+            <h2 id='titleOfWinT'>Topics</h2>
+         { topiclist.map((e,i)=>(
+          <div className="eachtopic">
+          <h4 key={e._id}>{e.topic}</h4>
+           </div>
+         ))}
+          <button
+                className="cancelTask"
+                onClick={()=>setShowTopic(false)}
+                >
+                Cancel
+                </button>
+         
+          </div>
+ </div>
+
+        
+    )}
+
       {
         showTopicModal && (
           <div className="overlay">
           <div className="modal">
-            <h2 id='titleOfWin'>Add Topics</h2>
+            <h2 id='titleOfWin'>Add Topic</h2>
             <div className="inputfields">
               
               <input
                 id='inputt'
                 type='text'
-                placeholder='Enter your Topic...'
                 value={topic}
-                onChange={(e)=>setTopic(e.target.value)}
+                placeholder='Enter your Topic...'
+                onChange={(e)=>settopic(e.target.value)}
               />
-
               <div className="btns">
-
                 <button
                 className="addTask"
-                onClick={()=>{
-
-                  if(topic.trim()==="") return
-                  const array=[...tasks]
-                  array[selectedIndex].topic.push(topic);
-                  settasks(array)
-                  setSelectedIndex(null)
-                  setTopic("")
-                  settask("")
-                  setShowTopicModal(false)
-                }}>
+                onClick={addTopics}
+              >
                 Add
                 </button>
 
@@ -118,26 +204,16 @@ const [selectedIndex,setSelectedIndex]=useState(null)
                 id='inputt'
                 type='text'
                 placeholder='Enter your Subject...'
-                value={task}
-                onChange={(e)=>settask(e.target.value)}
+                value={newSubject}
+                onChange={(e)=>setNewSubject(e.target.value)}
               />
 
               <div className="btns">
 
                 <button
                 className="addTask"
-                onClick={()=>{
-
-                  if(task.trim()==="") return
-
-                  settasks([...tasks,{
-                    Subject:task,
-                    topic:[]
-                  }])
-                  settask("")
-                  setShowModal(false)
-
-                }}>
+                onClick={()=>{addSubject(newSubject)}}
+                >
                 Add
                 </button>
 
@@ -152,8 +228,9 @@ const [selectedIndex,setSelectedIndex]=useState(null)
           </div>
  </div>
       )}
+
        <div className="imgBox">
-       {tasks.length === 0 && (
+       { subject.length==0 && (
           <img src={img} className="img"/>
         )}
         </div> 
@@ -161,5 +238,6 @@ const [selectedIndex,setSelectedIndex]=useState(null)
     </div>
   )
 }
+
 
 export default StudyPlan

@@ -2,20 +2,26 @@ import React, { useState } from "react";
 import img from "./loginGemi.png";
 import "./Login.css";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
 
   const [email,setemail]=useState("");
   const [password,setpassword]=useState("");
+  const navigate=useNavigate();
  
   async function login(){
-    const API=await fetch("http://localhost:3000/study/login",{
+    const API=await fetch("http://localhost:4000/login",{
       method:"POST",
       headers:{"Content-Type":"application/json"},
       body:JSON.stringify({email,password})
     });
     const data=await API.json();
     alert(data.message);
+    if(data.message==='LogedIn Successfully'){
+      localStorage.setItem("token",data.token);
+      navigate("/homee");
+    }
   }
 
 
