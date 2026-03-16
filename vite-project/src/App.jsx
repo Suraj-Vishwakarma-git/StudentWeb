@@ -5,6 +5,7 @@ import Login from "./components/Login.jsx";
 import Header from "./components/Header.jsx";
 import Main from "./components/Main.jsx";
 import StudyPlan from "./components/StudyPlan.jsx";
+import Schedule from "./components/Schedule.jsx";
 import AddExam from "./components/AddExam.jsx";
 import FocusMode from "./components/FocusMode.jsx";
 import Calender from "./components/Calendar.jsx";
@@ -23,6 +24,7 @@ function App() {
 
         <Header />
         <Routes>
+          <Route path="/schedule" element={<Schedule/>} />
           <Route path="/addexam" element={<AddExam/>}/>
           <Route path="/calendar" element={<Calender/>}/>
           <Route path="/studyplan" element={<StudyPlan/>}/>
@@ -30,7 +32,7 @@ function App() {
           <Route path="/homee" element={<Main/>}/>
           <Route path="/signup" element={<Signup/>}/>
           <Route path="/login" element={<Login/>}/>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home />}/>
           <Route path="/about" element={<About />} />
         </Routes>
 
