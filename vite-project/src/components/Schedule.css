@@ -1,151 +1,150 @@
-/* MAIN CONTAINER */
-
 .MainBox{
-    min-height:100vh;
-    width:85vw;
-    margin:auto;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
+min-height:100vh;
+width:85vw;
+margin:auto;
+display:flex;
+flex-direction:column;
+align-items:center;
 }
 
-
-/* HEADER */
-
 .headerr{
-    margin-top:30px;
-    margin-bottom:30px;
+margin-top:30px;
+margin-bottom:30px;
 }
 
 .headerr h2{
-    font-size:32px;
+font-size:32px;
 }
-
-
-/* TWO BOXES */
 
 .twinBoxes{
-    width:100%;
-    display:flex;
-    justify-content:center;
-    gap:60px;
+width:100%;
+display:flex;
+justify-content:center;
+gap:60px;
 }
-
-
-/* CARD STYLE */
 
 .StudyDetails,
 .ExamDetails{
-    background:white;
-    width:420px;
-    padding:25px;
-    border-radius:15px;
-    box-shadow:0px 6px 18px rgba(0,0,0,0.08);
+background:white;
+width:420px;
+padding:25px;
+border-radius:15px;
+box-shadow:0px 6px 18px rgba(0,0,0,0.08);
 }
-
-
-/* TITLE */
 
 .titlee{
-    font-size:24px;
-    font-weight:700;
-    margin-bottom:10px;
+font-size:24px;
+font-weight:700;
+margin-bottom:10px;
 }
-
-
-/* DATA LIST */
 
 .data{
-    margin-top:20px;
-    width:100%;
-    height:320px;
-    overflow-y:auto;
-    display:flex;
-    flex-direction:column;
-    gap:15px;
+margin-top:20px;
+width:100%;
+height:320px;
+overflow-y:auto;
+display:flex;
+flex-direction:column;
+gap:15px;
 }
-
-
-/* ITEMS */
-
-.data h2{
-    font-size:18px;
-    margin: -1px;
-    padding:10px 15px;
-    background:#f6f6f6;
-    border-radius:10px;
-}
-
-
-/* MODERN SCROLLBAR */
 
 .data::-webkit-scrollbar{
-    width:6px;
+width:6px;
 }
 
 .data::-webkit-scrollbar-track{
-    background:transparent;
+background:transparent;
 }
 
 .data::-webkit-scrollbar-thumb{
-    background:#cfcfcf;
-    border-radius:10px;
+background:#cfcfcf;
+border-radius:10px;
 }
 
 .data::-webkit-scrollbar-thumb:hover{
-    background:#a8a8a8;
+background:#a8a8a8;
 }
-
-
-/* RESPONSIVE */
 
 @media (max-width:900px){
 
 .twinBoxes{
-    flex-direction:column;
-    align-items:center;
+flex-direction:column;
+align-items:center;
 }
 
 }
-
 
 .statusExam{
-    margin: 5px;
-    font-weight: 800;
-    font-size:x-large;
+margin:5px;
+font-weight:800;
+font-size:x-large;
 }
 
 .subjectStudyPlan{
-     margin: 5px;
-    font-weight: 800;
-    font-size:x-large;
+margin:5px;
+font-weight:800;
+font-size:x-large;
 }
 
-.subjectRow,.examRow{
-    display: flex;
-    justify-content: space-between;
+.subjectRow,
+.examRow{
+display:flex;
+justify-content:space-between;
+align-items:center;
 }
 
 .topicContainer{
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    display: flex;
-   background: rgba(0,0,0,0.5);
-    align-items: center;
-    justify-content: center;
-
+position:fixed;
+top:0;
+left:0;
+height:100%;
+width:100%;
+display:flex;
+background:rgba(0,0,0,0.5);
+align-items:center;
+justify-content:center;
 }
 
 .mainTopicBox{
-    padding: 30px;
-    border-radius: 20px;
-    width: 400px;
-    background-color: aliceblue;
-    border: 1px solid black;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+padding:30px;
+border-radius:20px;
+width:400px;
+background:aliceblue;
+display:flex;
+flex-direction:column;
+gap:20px;
+}
+
+.topics{
+max-height:250px;
+overflow-y:auto;
+display:flex;
+flex-direction:column;
+gap:10px;
+}
+
+.notopic,
+.topictrue{
+display:flex;
+flex-direction:column;
+gap:20px;
+align-items:center;
+}
+
+.backBTN{
+    background-color: rgb(0, 255, 102);
+}
+
+.CancelBtn{
+    background-color: rgb(255, 0, 0);
+}
+
+.Backbtn{
+height:200px;
+width:100%;
+display:flex;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+gap:30px;
 }
