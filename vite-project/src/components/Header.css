@@ -9,10 +9,6 @@
     gap: 80px;
 }
 
-#lastBox{
-    grid-column: span 2;
-    justify-self: center;
-}
 
 .logo{
     display: flex;

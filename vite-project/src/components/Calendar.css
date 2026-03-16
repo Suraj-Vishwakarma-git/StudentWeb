@@ -1,0 +1,113 @@
+/* ---------- CONTAINER ---------- */
+
+.calendarContainer{
+    width:100%;
+    max-width:700px;
+    margin:auto;
+    padding:10px;
+}
+
+/* ---------- HEADER ---------- */
+
+.calendarHeader{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:15px;
+}
+
+.calendarHeader h2{
+    font-size:20px;
+}
+
+.calendarHeader button{
+    padding:6px 12px;
+    font-size:16px;
+    cursor:pointer;
+}
+
+/* ---------- GRID ---------- */
+
+.calendarGrid{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:8px;
+}
+
+/* ---------- DAY NAME ---------- */
+
+.dayName{
+    text-align:center;
+    font-weight:bold;
+}
+
+/* ---------- DATE ---------- */
+
+.date{
+
+    width:100%;
+    aspect-ratio:1/1;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    border-radius:8px;
+
+    background:white;
+
+    box-shadow:0 2px 5px rgba(0,0,0,0.1);
+
+    cursor:pointer;
+
+    font-size:16px;
+}
+
+.exam{
+    background:#ff4d4d;
+    color:white;
+}
+
+/* ---------- TABLET ---------- */
+
+@media (max-width:768px){
+
+    .calendarHeader h2{
+        font-size:18px;
+    }
+
+    .calendarGrid{
+        gap:5px;
+    }
+
+    .date{
+        font-size:14px;
+    }
+
+}
+
+/* ---------- MOBILE ---------- */
+
+@media (max-width:480px){
+
+    .calendarContainer{
+        padding:5px;
+    }
+
+    .calendarHeader h2{
+        font-size:16px;
+    }
+
+    .calendarGrid{
+        gap:4px;
+    }
+
+    .dayName{
+        font-size:10px;
+    }
+
+    .date{
+        font-size:12px;
+    }
+
+}

@@ -21,9 +21,9 @@ const Header = () => {
       </Link>
 
       <nav className={clicked?"nav":"nav-links"} >
-        <Link to="/schedule">Schedule</Link>
-        <Link to="/calendar">Calendar</Link>
-        <Link to="/login">Login</Link>
+        <Link to="/schedule" onClick={()=>setcliked(false)}>Schedule</Link>
+        <Link to="/calendar" onClick={()=>setcliked(false)}>Calendar</Link>
+        <Link to="/login" onClick={()=>setcliked(false)}>Login</Link>
       </nav>
 
       <div className="hamburger" onClick={hamburger}>

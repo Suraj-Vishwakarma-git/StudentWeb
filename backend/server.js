@@ -41,6 +41,13 @@ const Subjecttopic=mongoose.model("Subjecttopic",new mongoose.Schema({
     topic:String
 }));
 
+const ExamDate=mongoose.model("ExamDate",new mongoose.Schema({
+    userId:mongoose.Schema.Types.ObjectId,
+    subject:String,
+    date:Date
+}));
+
+
 
 const secure=async (req,res,next)=>{
     const authHead=req.headers.authorization;
@@ -133,4 +140,28 @@ server.delete("/deletesubject",secure,async (req,res)=>{
 
 server.listen(4000,()=>{
     console.log("Server Started");
+})
+
+
+server.post("/examdate",secure,async (req,res)=>{
+    const {date,subject}=req.body;
+    const nExamD=await ExamDate.create({
+        userId:req.userId,
+        subject:subject,
+        date:date  
+    });
+    res.json({message:"Exam Date Added"});
+});
+
+
+server.delete("/deleteexamdate",secure,async (req,res)=>{
+    const {examId}=req.body;
+    const Delete=await ExamDate.deleteOne({userId:req.userId,_id:examId});
+    if(!Delete) return res.json({message:"Invalid Exam Date"});
+    res.json({message:"Deleted Exam Date"});
+})
+
+server.get("/allexam",secure,async (req,res)=>{
+    const data=await ExamDate.find({userId:req.userId});
+    res.json({data})
 })

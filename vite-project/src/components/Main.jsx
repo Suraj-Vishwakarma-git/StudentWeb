@@ -15,8 +15,8 @@ const Main = () => {
       const minute=Math.floor((diff/(1000*60))%60);
       const seconds=Math.floor((diff/1000)%60);
       setTimeLeft(`${hours}h ${minute}m ${seconds}s`);
-
     }
+    
     updateTime();
     const timer=setInterval(updateTime,1000);
     return ()=> clearInterval(timer);
