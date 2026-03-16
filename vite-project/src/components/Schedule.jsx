@@ -4,254 +4,292 @@ import { Link } from "react-router-dom";
 
 const Schedule = () => {
 
-const [backdata,setbackdata] = useState([]);
-const [subjects,setsubject] = useState([]);
-const [topiclist,settopiclist] = useState([]);
-const [showTopicModal,setshowTopicModal] = useState(false);
+  const [backdata, setbackdata] = useState([]);
+  const [subjects, setsubject] = useState([]);
+  const [topiclist, settopiclist] = useState([]);
+  const [showTopicModal, setshowTopicModal] = useState(false);
 
-async function GetAllDates(){
+  async function GetAllDates() {
 
-const token = localStorage.getItem("token");
+    const token = localStorage.getItem("token");
 
-const API = await fetch("http://localhost:4000/allexam",{
-method:"GET",
-headers:{
-"Content-Type":"application/json",
-Authorization:`Bearer ${token}`
-}
-});
+    const API = await fetch("http://localhost:4000/allexam", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
+      }
+    });
 
-const data = await API.json();
-setbackdata(data.data);
+    const data = await API.json();
+    setbackdata(data.data);
 
-}
+  }
 
-async function getSubjects(){
+  async function getSubjects() {
 
-const token = localStorage.getItem("token");
+    const token = localStorage.getItem("token");
 
-const API = await fetch("http://localhost:4000/allsubjects",{
-headers:{
-Authorization:`Bearer ${token}`
-}
-});
+    const API = await fetch("http://localhost:4000/allsubjects", {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
 
-const data = await API.json();
+    const data = await API.json();
 
-if(data.subjects){
-setsubject(data.subjects);
-}
+    if (data.subjects) {
+      setsubject(data.subjects);
+    }
 
-}
+  }
 
-async function getTopics(SubjId){
+  async function getTopics(SubjId) {
 
-settopiclist([]);
+    settopiclist([]);
 
-const token = localStorage.getItem("token");
+    const token = localStorage.getItem("token");
 
-const API = await fetch("http://localhost:4000/alltopics",{
-method:"POST",
-headers:{
-"Content-Type":"application/json",
-Authorization:`Bearer ${token}`
-},
-body:JSON.stringify({subjectId:SubjId})
-});
+    const API = await fetch("http://localhost:4000/alltopics", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({ subjectId: SubjId })
+    });
 
-const data = await API.json();
+    const data = await API.json();
 
-if(data.topics){
-settopiclist(data.topics);
-}
+    if (data.topics) {
+      settopiclist(data.topics);
+    }
 
-}
+  }
 
-useEffect(()=>{
-Promise.all([GetAllDates(), getSubjects()]);
-},[]);
-
-const sortedExams = [...backdata].sort(
-(a,b)=> new Date(a.date) - new Date(b.date)
+  async function Completed(Id){
+    const token=localStorage.getItem("token");
+    const API=await fetch("http://localhost:4000/completedSubject",{
+        method:"PUT",
+        headers:{
+            "Content-Type":"application/json",
+            Authorization:`Bearer ${token}`
+        },
+        body:JSON.stringify({subId:Id})
+    });
+   setsubject(prev =>
+  prev.map(s =>
+    s._id === Id ? { ...s, completed: true } : s
+  )
 );
+  }
 
-const today = new Date();
+  useEffect(() => {
+    Promise.all([GetAllDates(), getSubjects()]);
+  }, []);
 
-return (
+  const sortedExams = [...backdata].sort(
+    (a, b) => new Date(a.date) - new Date(b.date)
+  );
 
-<div>
+  const today = new Date();
 
-<div className="MainBox">
+  return (
 
-<div className="headerr">
-<h2>Your Entire Schedule</h2>
-</div>
+    <div>
 
-{showTopicModal && (
+      <div className="MainBox">
 
-<div className="topicContainer">
+        <div className="headerr">
+          <h2>Your Entire Schedule</h2>
+        </div>
 
-<div className="mainTopicBox">
 
-{topiclist.length === 0 ? (
+        {showTopicModal && (
 
-<div className="notopic">
+          <div className="topicContainer">
 
-<h2>Topic List Is Empty</h2>
+            <div className="mainTopicBox">
 
-<Link to="/studyplan">
-<button className="backBTN">Click to Set Topics</button>
-</Link>
+              {topiclist.length === 0 ? (
 
-<button onClick={()=>setshowTopicModal(false)} className="CancelBtn">Cancel</button>
+                <div className="notopic">
 
-</div>
+                  <h2>Topic List Is Empty</h2>
 
-) : (
+                  <Link to="/studyplan">
+                    <button className="backBTN">Click to Set Topics</button>
+                  </Link>
 
-<div className="topictrue">
+                  <button
+                    onClick={() => setshowTopicModal(false)}
+                    className="CancelBtn"
+                  >
+                    Cancel
+                  </button>
 
-<div className="title">Topics</div>
+                </div>
 
-<div className="topics">
+              ) : (
 
-{topiclist.map((e)=>(
-<p key={e._id}>{e.topic}</p>
-))}
+                <div className="topictrue">
 
-</div>
+                  <div className="title">Topics</div>
 
-<button onClick={()=>setshowTopicModal(false)} className="CancelBtn">Cancel</button>
+                  <div className="topics">
+                    {topiclist.map((e) => (
+                      <p key={e._id}>{e.topic}</p>
+                    ))}
+                  </div>
+                  <button
+                    onClick={() => setshowTopicModal(false)}
+                    className="CancelBtn"
+                  >
+                    Cancel
+                  </button>
 
-</div>
+                </div>
 
-)}
+              )}
 
-</div>
+            </div>
 
-</div>
+          </div>
 
-)}
+        )}
 
-<div className="twinBoxes">
 
-<div className="StudyDetails">
+        <div className="twinBoxes">
 
-<div className="titlee">✏️ Study Plan</div>
 
-<div className="data">
+          <div className="StudyDetails">
 
-{subjects.length === 0 ? (
+            <div className="titlee">✏️ Study Plan</div>
+            <div className="data">
+              {subjects.length === 0 ? (
+                <div className="Backbtn">
+                  <h2>Please Add Study Plan</h2>
+                  <Link to="/studyplan">
+                    <button>Study Plan</button>
+                  </Link>
 
-<div className="Backbtn">
+                </div>
 
-<h2>Please Add Study Plan</h2>
+              ) : (
 
-<Link to="/studyplan">
-<button>Study Plan</button>
-</Link>
+                subjects.map((s) => (
 
-</div>
+                  <div key={s._id} className="subjectRow">
 
-) : (
+                    <span className="subjectStudyPlan">
+                      {s.subject}
+                    </span>
+                    <div className="btnss">
+                    <button
+                      onClick={() => {
+                        setshowTopicModal(true);
+                        getTopics(s._id);
+                      }}
+                    >
+                      Topics
+                    </button>
+                    <button 
+                    disabled={s.completed}
+                    onClick={()=>Completed(s._id)}
+                    style={{background:s.completed?"gray":"green",
+                        color:"white"
+                    }}
+                    >{s.completed?"Completed":"complete"}</button>
+                   </div>
+                  </div>
 
-subjects.map((s)=>(
-<div key={s._id} className="subjectRow">
+                ))
 
-<span className="subjectStudyPlan">{s.subject}</span>
+              )}
 
-<button onClick={()=>{
-setshowTopicModal(true);
-getTopics(s._id);
-}}>
-Topics
-</button>
+            </div>
 
-</div>
-))
+          </div>
 
-)}
 
-</div>
+          <div className="ExamDetails">
 
-</div>
+            <div className="titlee">📝 Exam Day</div>
 
-<div className="ExamDetails">
+            <div className="data">
 
-<div className="titlee">📝 Exam Day</div>
+              {sortedExams.length === 0 ? (
 
-<div className="data">
+                <div className="Backbtn">
 
-{sortedExams.length === 0 ? (
+                  <h2>Please Add Exam Dates</h2>
 
-<div className="Backbtn">
-<h2>Please Add Exam Dates</h2>
-<Link to="/addexam">
-<button>Exam Dates</button>
-</Link>
+                  <Link to="/addexam">
+                    <button>Exam Dates</button>
+                  </Link>
 
-</div>
+                </div>
 
-) : (
+              ) : (
 
-sortedExams.map((e)=>{
+                sortedExams.map((e) => {
 
-const diff = new Date(e.date) - today;
+                  const diff = new Date(e.date) - today;
+                  const daysLeft = Math.ceil(diff / (1000 * 60 * 60 * 24));
 
-const daysLeft = Math.ceil(diff / (1000 * 60 * 60 * 24));
+                  let status;
 
-let status;
+                  if (daysLeft > 0) {
+                    status = `${daysLeft} days left`;
+                  }
+                  else if (daysLeft === 0) {
+                    status = "Exam Today";
+                  }
+                  else {
+                    status = "Completed";
+                  }
 
-if(daysLeft > 0){
-status = `${daysLeft} days left`;
-}
-else if(daysLeft === 0){
-status = "Exam Today";
-}
-else{
-status = "Completed";
-}
+                  return (
 
-return(
+                    <div key={e._id} className="examRow">
 
-<div key={e._id} className="examRow">
+                      <span className="statusExam">
+                        {e.subject}
+                      </span>
 
-<span className="statusExam">{e.subject}</span>
+                      <span
+                        className="statusExam"
+                        style={{
+                          color:
+                            daysLeft <= 1
+                              ? "red"
+                              : daysLeft <= 4
+                              ? "orange"
+                              : "green"
+                        }}
+                      >
+                        {status}
+                      </span>
 
-<span
-className="statusExam"
-style={{
-color: daysLeft <= 1
-? "red"
-: daysLeft <= 4
-? "orange"
-: "green"
-}}
->
+                    </div>
 
-{status}
+                  );
 
-</span>
+                })
 
-</div>
+              )}
 
-)
+            </div>
 
-})
+          </div>
 
-)}
+        </div>
 
-</div>
+      </div>
 
-</div>
+    </div>
 
-</div>
-
-</div>
-
-</div>
-
-);
+  );
 
 };
 

@@ -115,6 +115,11 @@ flex-direction:column;
 gap:20px;
 }
 
+.btnss{
+    display: flex;
+    gap: 10px;
+}
+
 .topics{
 max-height:250px;
 overflow-y:auto;
@@ -122,6 +127,8 @@ display:flex;
 flex-direction:column;
 gap:10px;
 }
+
+
 
 .notopic,
 .topictrue{

@@ -32,13 +32,17 @@ const User=mongoose.model("User",new mongoose.Schema({
 
 const StudyPlan=mongoose.model("StudyPlan",new mongoose.Schema({
     userId:mongoose.Schema.Types.ObjectId,
-    subject:{type:String,required:true}
+    subject:{type:String,required:true},
+    completed:{
+        type:Boolean,
+        default:false
+    }
 }));
 
 const Subjecttopic=mongoose.model("Subjecttopic",new mongoose.Schema({
     userId:mongoose.Schema.Types.ObjectId,
     subjectId:mongoose.Schema.Types.ObjectId,
-    topic:String
+    topic:String,
 }));
 
 const ExamDate=mongoose.model("ExamDate",new mongoose.Schema({
@@ -164,4 +168,15 @@ server.delete("/deleteexamdate",secure,async (req,res)=>{
 server.get("/allexam",secure,async (req,res)=>{
     const data=await ExamDate.find({userId:req.userId});
     res.json({data})
-})
+});
+
+server.put("/completedSubject",secure,async (req,res)=>{
+    const {subId}=req.body;
+    const Subject=await StudyPlan.findByIdAndUpdate(
+        subId,
+        {completed:true},
+         { returnDocument: "after" }
+    );
+    res.json({message:"Subject Complete"});
+});
+
