@@ -131,11 +131,8 @@ const Schedule = () => {
                 </div>
 
               ) : (
-
                 <div className="topictrue">
-
                   <div className="title">Topics</div>
-
                   <div className="topics">
                     {topiclist.map((e) => (
                       <p key={e._id}>{e.topic}</p>
@@ -147,13 +144,9 @@ const Schedule = () => {
                   >
                     Cancel
                   </button>
-
                 </div>
-
               )}
-
             </div>
-
           </div>
 
         )}

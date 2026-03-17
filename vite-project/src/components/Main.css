@@ -1,4 +1,4 @@
-.main{
+/* .main{
     width: 90vw;
     max-width: 900px;
     margin:40px auto;
@@ -48,23 +48,37 @@
     border-radius: 18px;
     color: white;
     background:rgb(76, 77, 76);
-    display: flex;
-    flex-direction: column;
+        background: linear-gradient(135deg, #2e2e2e, #3a3a3a);
+
     gap: 15px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.15);
 }
 
 .progressPercent{
-    width: 80px;
-    height: 40px;
+    width: 100px;
+    min-height: 100px;
     margin: 10px;
     padding: 10px;
-    border-radius:100px;
+    border-radius:20px;
     background: rgba(255, 255,255,0.25);
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: bold;
+}
+
+.progressBar{
+  width: 100%;
+  height: 12px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.progressFill{
+  height: 100%;
+  border-radius: 20px;
+  transition: 0.5s ease;
 }
 
 .icon{
@@ -110,6 +124,15 @@
     width: 350px;
 }
 
+.block{
+    height: 100%;
+    width: 60%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
 
 .quickBox{
     display: flex;
@@ -140,5 +163,187 @@
 @media(max-width:768px){
     .main{
         flex-direction: column;
+    }
+} */
+
+
+
+.main {
+    width: 90vw;
+    max-width: 900px;
+    margin: 40px auto;
+    display: flex;
+    gap: 20px;
+}
+
+/* Cards */
+.progressCard,
+.quickActions {
+    flex: 1;
+    padding: 25px;
+    border-radius: 14px;
+    border: 1px solid #e6e6e6;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+
+}
+
+/* Progress Card */
+.progressCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    border-radius: 18px;
+    color: white;
+    background: linear-gradient(135deg, #2e2e2e, #3a3a3a);
+    gap: 15px;
+}
+
+/* Header */
+.textt {
+    display: flex;
+    align-items: center;
+}
+
+.gemilogo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 35px;
+    width: 35px;
+    margin: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.25);
+}
+
+/* Layout block */
+.Mblock {
+    display: flex;
+    gap: 20px;
+}
+
+.block {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Quotes */
+.quotes {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+/* Progress Bar */
+.progressBar {
+    width: 100%;
+    height: 12px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 20px;
+    overflow: hidden;
+    margin-top: 30px;
+}
+
+.progressFill {
+    height: 100%;
+    border-radius: 20px;
+    transition: width 0.6s ease;
+}
+
+/* Percentage */
+.progressPercent {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.25);
+    font-weight: bold;
+}
+
+/* Time */
+.dateTime {
+    padding: 8px 15px;
+    background: rgba(255,255,255,0.25);
+    border-radius: 25px;
+}
+
+/* Quick Actions */
+.quickActions {
+    background-color: rgb(86, 86, 86);
+    color: white;
+}
+
+#quickmeg {
+    color: white;
+}
+
+/* Grid */
+.quickGrid {
+    margin-top: 15px;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 15px;
+}
+
+.quickBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 90px;
+    background: #fafafa;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+.quickBox:hover {
+    background: #f0f0f0;
+    transform: translateY(-4px) scale(1.03);
+}
+
+/* Icon */
+.icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    width: 40px;
+    margin-bottom: 10px;
+    border-radius: 50%;
+    background-color: rgba(179, 167, 167, 0.25);
+}
+
+/* Last Box */
+#lastBox {
+    grid-column: span 2;
+    width: 100%;
+}
+
+/* 📱 Mobile */
+@media (max-width: 768px) {
+    .main {
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    .Mblock {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .block {
+        width: 100%;
+    }
+
+    .quickGrid {
+        grid-template-columns: 1fr;
+    }
+
+    #lastBox {
+        grid-column: span 1;
     }
 }

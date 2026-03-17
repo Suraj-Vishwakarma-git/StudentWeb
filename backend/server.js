@@ -142,9 +142,6 @@ server.delete("/deletesubject",secure,async (req,res)=>{
     res.json({message:"Subject and topics deleted"});
 })
 
-server.listen(4000,()=>{
-    console.log("Server Started");
-})
 
 
 server.post("/examdate",secure,async (req,res)=>{
@@ -180,3 +177,13 @@ server.put("/completedSubject",secure,async (req,res)=>{
     res.json({message:"Subject Complete"});
 });
 
+server.get("/progress",secure,async(req,res)=>{
+    const total=await StudyPlan.countDocuments({userId:req.userId});
+    const completed=await StudyPlan.countDocuments({userId:req.userId,completed:true});
+    const progress=total=== 0? 0:Math.round((completed/total)*100);
+    res.json({progress});
+});
+
+server.listen(4000,()=>{
+    console.log("Server Started");
+})
