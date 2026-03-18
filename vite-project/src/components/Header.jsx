@@ -2,7 +2,7 @@ import React, { useState ,useEffect} from "react";
 import { Link } from "react-router-dom";
 import "./Header.css";
 import { jwtDecode } from "jwt-decode";
-
+import "./Common.css";
 
 
 const Header = () => {
@@ -10,6 +10,8 @@ const Header = () => {
  const [clicked,setcliked]=useState(false);
  const [userName, setUserName] = useState("");
  const [logoutModal,setLogoutModal]=useState(false);
+  
+  
 
  function hamburger(){
   setcliked(!clicked);
@@ -47,8 +49,8 @@ const Header = () => {
 
   return (
     <header className="header">
-
-      <Link to="/" className="logo">
+  
+    <Link to="/" className="logo">
         <span>STUDY</span>
         <span className="logo-red">OS</span>
       </Link>

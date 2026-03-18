@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import loginError from "./loginerrorGemi.png"
 import "./Calendar.css";
 
-const Calendar = () => {
+const Calendar = ({loginUser}) => {
 
     const [currentDate, setCurrentDate] = useState(new Date());
     const [examDays, setExamDays] = useState([]);
@@ -11,6 +13,18 @@ const Calendar = () => {
 
     const firstDay = new Date(year, month, 1).getDay();
     const lastDate = new Date(year, month + 1, 0).getDate();
+
+     if (!loginUser) {
+     return (
+         <div className="LOGIN">
+            <div >
+                <img className="LoginErr" src={loginError}  />
+            </div>
+         <h2 id="ErrorTxt">Login First</h2>
+         <Link to="/login"><button id="ErrorBtn">Login</button></Link>
+         </div>
+     );
+   }
 
     const monthNames = [
         "January","February","March","April",
@@ -48,6 +62,7 @@ const Calendar = () => {
 
     return (
         <div className="calendarContainer">
+              
 
             <div className="calendarHeader">
                 <button onClick={() => changeMonth(-1)}>◀</button>

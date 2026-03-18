@@ -3,8 +3,9 @@ import img from "./loginGemi.png";
 import "./Login.css";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
-const Login = () => {
+const Login = ({setloginUser}) => {
 
   const [email,setemail]=useState("");
   const [password,setpassword]=useState("");
@@ -21,10 +22,17 @@ const Login = () => {
     if(data.message==='LogedIn Successfully'){
       localStorage.setItem("token",data.token);
       window.dispatchEvent(new Event("userChanged"));
+      setloginUser(true);
       navigate("/homee");
     }
   }
 
+  useEffect(()=>{
+   const token=localStorage.getItem("token");
+   if(token){
+    setloginUser(true);
+   }
+  },[])
 
   return (
     <div className="login-container">

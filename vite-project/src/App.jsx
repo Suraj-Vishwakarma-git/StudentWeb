@@ -13,25 +13,32 @@ import { useContext } from "react";
 import { UserContext } from "./UserContext.jsx";
 import Signup from "./components/Signup.jsx";
 import "./App.css";
+import { useState,useEffect } from "react";
 
 function App() {
 
-  const { setUser } = useContext(UserContext);
+  const [UserLogIn,setUserLogIn]=useState(false);
+  useEffect(() => {
+  const token = localStorage.getItem("token");
+
+  if (token) {
+    setUserLogIn(true);
+  }
+}, []);
  
   return (
     <>
       <BrowserRouter>
 
-        <Header />
-        <Routes>
-          <Route path="/schedule" element={<Schedule/>} />
+<Header loginUser={UserLogIn} setloginUser={setUserLogIn} />        <Routes>
+          <Route path="/schedule" element={<Schedule loginUser={UserLogIn} />}  />
           <Route path="/addexam" element={<AddExam/>}/>
-          <Route path="/calendar" element={<Calender/>}/>
+          <Route path="/calendar" element={<Calender loginUser={UserLogIn} />}   />
           <Route path="/studyplan" element={<StudyPlan/>}/>
           <Route path="/focusmode" element={<FocusMode/>}/>
-          <Route path="/homee" element={<Main/>}/>
+          <Route path="/homee" element={<Main loginUser={UserLogIn} />}  />
           <Route path="/signup" element={<Signup/>}/>
-          <Route path="/login" element={<Login/>}/>
+          <Route path="/login" element={<Login setloginUser={setUserLogIn} />}  />
           <Route path="/" element={<Home />}/>
           <Route path="/about" element={<About />} />
         </Routes>

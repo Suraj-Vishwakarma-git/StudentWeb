@@ -1,183 +1,217 @@
 import React, { useState, useEffect } from "react";
 import "./Schedule.css";
 import { Link } from "react-router-dom";
+import loginError from "./loginerrorGemi.png"
 
-const Schedule = () => {
+const Schedule = ({loginUser}) => {
 
   const [backdata, setbackdata] = useState([]);
   const [subjects, setsubject] = useState([]);
   const [topiclist, settopiclist] = useState([]);
   const [showTopicModal, setshowTopicModal] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [loadingTopics, setLoadingTopics] = useState(false);
+
+
 
   async function GetAllDates() {
+    try {
+      const token = localStorage.getItem("token");
 
-    const token = localStorage.getItem("token");
+      const res = await fetch("http://localhost:4000/allexam", {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
 
-    const API = await fetch("http://localhost:4000/allexam", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`
-      }
-    });
+      const data = await res.json();
 
-    const data = await API.json();
-    setbackdata(data.data);
+      setbackdata(Array.isArray(data.data) ? data.data : []);
 
+    } catch (err) {
+      console.log("Error fetching exams:", err);
+      setbackdata([]); 
+    }
   }
 
   async function getSubjects() {
+    try {
+      const token = localStorage.getItem("token");
 
-    const token = localStorage.getItem("token");
+      const res = await fetch("http://localhost:4000/allsubjects", {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
 
-    const API = await fetch("http://localhost:4000/allsubjects", {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
+      const data = await res.json();
 
-    const data = await API.json();
+      setsubject(Array.isArray(data.subjects) ? data.subjects : []);
 
-    if (data.subjects) {
-      setsubject(data.subjects);
+    } catch (err) {
+      console.log("Error fetching subjects:", err);
+      setsubject([]);
     }
-
   }
 
   async function getTopics(SubjId) {
-
     settopiclist([]);
+    setLoadingTopics(true);
 
+    try {
+      const token = localStorage.getItem("token");
+
+      const res = await fetch("http://localhost:4000/alltopics", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ subjectId: SubjId })
+      });
+
+      const data = await res.json();
+
+      settopiclist(Array.isArray(data.topics) ? data.topics : []);
+
+    } catch (err) {
+      console.log("Error fetching topics:", err);
+      settopiclist([]);
+    } finally {
+      setLoadingTopics(false);
+    }
+  }
+
+async function Completed(Id) {
+  try {
     const token = localStorage.getItem("token");
 
-    const API = await fetch("http://localhost:4000/alltopics", {
-      method: "POST",
+    await fetch("http://localhost:4000/completedSubject", {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify({ subjectId: SubjId })
+      body: JSON.stringify({ subId: Id })
     });
+    setsubject(prev =>
+      prev.map(s =>
+        s._id === Id ? { ...s, completed: true } : s
+      )
+    );
 
-    const data = await API.json();
-
-    if (data.topics) {
-      settopiclist(data.topics);
-    }
-
+  } catch (err) {
+    console.log("Error updating subject:", err);
   }
-
-  async function Completed(Id){
-    const token=localStorage.getItem("token");
-    const API=await fetch("http://localhost:4000/completedSubject",{
-        method:"PUT",
-        headers:{
-            "Content-Type":"application/json",
-            Authorization:`Bearer ${token}`
-        },
-        body:JSON.stringify({subId:Id})
-    });
-   setsubject(prev =>
-  prev.map(s =>
-    s._id === Id ? { ...s, completed: true } : s
-  )
-);
-  }
+}
 
   useEffect(() => {
-    Promise.all([GetAllDates(), getSubjects()]);
+    Promise.all([GetAllDates(), getSubjects()])
+      .finally(() => setLoading(false));
   }, []);
 
-  const sortedExams = [...backdata].sort(
-    (a, b) => new Date(a.date) - new Date(b.date)
-  );
+  const sortedExams = Array.isArray(backdata)
+    ? [...backdata].sort((a, b) => new Date(a.date) - new Date(b.date))
+    : [];
 
   const today = new Date();
+  today.setHours(0, 0, 0, 0);
 
+  if (loading) {
+    return <h2 style={{ textAlign: "center" }}>Loading...</h2>;
+  }
+
+      if (!loginUser) {
+       return (
+           <div className="LOGIN">
+              <div >
+                  <img className="LoginErr" src={loginError}  />
+              </div>
+           <h2 id="ErrorTxt">Login First</h2>
+           <Link to="/login"><button id="ErrorBtn">Login</button></Link>
+           </div>
+       );
+     }
   return (
+   
+    
 
-    <div>
+    <div className="MainBox">
+     
 
-      <div className="MainBox">
+      <div className="headerr">
+        <h2>Your Entire Schedule</h2>
+      </div>
 
-        <div className="headerr">
-          <h2>Your Entire Schedule</h2>
-        </div>
+      {showTopicModal && (
+        <div className="topicContainer">
+          <div className="mainTopicBox">
 
+            {loadingTopics ? (
+              <h3>Loading Topics...</h3>
+            ) : topiclist.length === 0 ? (
+              <div className="notopic">
+                <h2>Topic List Is Empty</h2>
 
-        {showTopicModal && (
+                <Link to="/studyplan">
+                  <button className="backBTN">Click to Set Topics</button>
+                </Link>
 
-          <div className="topicContainer">
+                <button
+                  onClick={() => setshowTopicModal(false)}
+                  className="CancelBtn"
+                >
+                  Cancel
+                </button>
+              </div>
+            ) : (
+              <div className="topictrue">
+                <div className="title">Topics</div>
 
-            <div className="mainTopicBox">
-
-              {topiclist.length === 0 ? (
-
-                <div className="notopic">
-
-                  <h2>Topic List Is Empty</h2>
-
-                  <Link to="/studyplan">
-                    <button className="backBTN">Click to Set Topics</button>
-                  </Link>
-
-                  <button
-                    onClick={() => setshowTopicModal(false)}
-                    className="CancelBtn"
-                  >
-                    Cancel
-                  </button>
-
+                <div className="topics">
+                  {topiclist.map((e) => (
+                    <p key={e._id}>{e.topic}</p>
+                  ))}
                 </div>
 
-              ) : (
-                <div className="topictrue">
-                  <div className="title">Topics</div>
-                  <div className="topics">
-                    {topiclist.map((e) => (
-                      <p key={e._id}>{e.topic}</p>
-                    ))}
-                  </div>
-                  <button
-                    onClick={() => setshowTopicModal(false)}
-                    className="CancelBtn"
-                  >
-                    Cancel
-                  </button>
-                </div>
-              )}
-            </div>
+                <button
+                  onClick={() => setshowTopicModal(false)}
+                  className="CancelBtn"
+                >
+                  Cancel
+                </button>
+              </div>
+            )}
+
           </div>
+        </div>
+      )}
 
-        )}
+      <div className="twinBoxes">
 
+        <div className="StudyDetails">
 
-        <div className="twinBoxes">
+          <div className="titlee">✏️ Study Plan</div>
 
+          <div className="data">
+            {subjects.length === 0 ? (
+              <div className="Backbtn">
+                <h2>Please Add Study Plan</h2>
 
-          <div className="StudyDetails">
+                <Link to="/studyplan">
+                  <button>Study Plan</button>
+                </Link>
+              </div>
+            ) : (
+              subjects.map((s) => (
+                <div key={s._id} className="subjectRow">
 
-            <div className="titlee">✏️ Study Plan</div>
-            <div className="data">
-              {subjects.length === 0 ? (
-                <div className="Backbtn">
-                  <h2>Please Add Study Plan</h2>
-                  <Link to="/studyplan">
-                    <button>Study Plan</button>
-                  </Link>
+                  <span className="subjectStudyPlan">
+                    {s.subject}
+                  </span>
 
-                </div>
+                  <div className="btnss">
 
-              ) : (
-
-                subjects.map((s) => (
-
-                  <div key={s._id} className="subjectRow">
-
-                    <span className="subjectStudyPlan">
-                      {s.subject}
-                    </span>
-                    <div className="btnss">
                     <button
                       onClick={() => {
                         setshowTopicModal(true);
@@ -186,104 +220,88 @@ const Schedule = () => {
                     >
                       Topics
                     </button>
-                    <button 
-                    disabled={s.completed}
-                    onClick={()=>Completed(s._id)}
-                    style={{background:s.completed?"gray":"green",
-                        color:"white"
-                    }}
-                    >{s.completed?"Completed":"complete"}</button>
-                   </div>
+
+                    <button
+                      disabled={s.completed}
+                      onClick={() => Completed(s._id)}
+                      style={{
+                        background: s.completed ? "gray" : "green",
+                        color: "white"
+                      }}
+                    >
+                      {s.completed ? "✔ Completed" : "Mark Complete"}
+                    </button>
+
                   </div>
-
-                ))
-
-              )}
-
-            </div>
-
-          </div>
-
-
-          <div className="ExamDetails">
-
-            <div className="titlee">📝 Exam Day</div>
-
-            <div className="data">
-
-              {sortedExams.length === 0 ? (
-
-                <div className="Backbtn">
-
-                  <h2>Please Add Exam Dates</h2>
-
-                  <Link to="/addexam">
-                    <button>Exam Dates</button>
-                  </Link>
-
                 </div>
+              ))
+            )}
+          </div>
+        </div>
 
-              ) : (
+        <div className="ExamDetails">
+          <div className="titlee">📝 Exam Day</div>
+          <div className="data">
+            {sortedExams.length === 0 ? (
+              <div className="Backbtn">
+                <h2>Please Add Exam Dates</h2>
 
-                sortedExams.map((e) => {
+                <Link to="/addexam">
+                  <button>Exam Dates</button>
+                </Link>
+              </div>
+            ) : (
+              sortedExams.map((e) => {
 
-                  const diff = new Date(e.date) - today;
-                  const daysLeft = Math.ceil(diff / (1000 * 60 * 60 * 24));
+                const examDate = new Date(e.date);
+                examDate.setHours(0, 0, 0, 0);
 
-                  let status;
+                const diff = examDate - today;
+                const daysLeft = Math.ceil(diff / (1000 * 60 * 60 * 24));
 
-                  if (daysLeft > 0) {
-                    status = `${daysLeft} days left`;
-                  }
-                  else if (daysLeft === 0) {
-                    status = "Exam Today";
-                  }
-                  else {
-                    status = "Completed";
-                  }
+                let status;
 
-                  return (
+                if (daysLeft > 0) {
+                  status = `${daysLeft} days left`;
+                } else if (daysLeft === 0) {
+                  status = "Exam Today";
+                } else {
+                  status = "Completed";
+                }
 
-                    <div key={e._id} className="examRow">
+                return (
+                  <div key={e._id} className="examRow">
+                    <span className="statusExam">
+                      {e.subject}
+                    </span>
 
-                      <span className="statusExam">
-                        {e.subject}
-                      </span>
+                    <span
+                      className="statusExam"
+                      style={{
+                        color:
+                          daysLeft <= 1
+                            ? "red"
+                            : daysLeft <= 4
+                            ? "orange"
+                            : "green"
+                      }}
+                    >
+                      {status}
+                    </span>
 
-                      <span
-                        className="statusExam"
-                        style={{
-                          color:
-                            daysLeft <= 1
-                              ? "red"
-                              : daysLeft <= 4
-                              ? "orange"
-                              : "green"
-                        }}
-                      >
-                        {status}
-                      </span>
+                  </div>
+                );
 
-                    </div>
-
-                  );
-
-                })
-
-              )}
-
-            </div>
+              })
+            )}
 
           </div>
-
         </div>
 
       </div>
 
     </div>
-
   );
-
 };
 
 export default Schedule;

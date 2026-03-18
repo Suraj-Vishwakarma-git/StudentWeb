@@ -1,0 +1,36 @@
+/* .loginError{
+    position:fixed;
+top:0;
+left:0;
+height:100%;
+width:100%;
+display:flex;
+background:rgba(0,0,0,0.5);
+align-items:center;
+justify-content:center;
+} */
+
+.LOGIN{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    border-radius: 30px;
+}
+.LoginErr{
+    height: 300px;
+    width: 330px;
+}
+
+#ErrorBtn{
+    color: rgb(255, 255, 255);
+    background-color: chartreuse;
+    font-weight: 800;
+    font-size: x-large;
+}
+#ErrorTxt{
+    font-weight: 900;
+    font-size: xx-large;
+}
