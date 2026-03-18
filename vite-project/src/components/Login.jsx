@@ -12,7 +12,7 @@ const Login = ({setloginUser}) => {
   const navigate=useNavigate();
  
   async function login(){
-    const API=await fetch("http://localhost:4000/login",{
+    const API=await fetch("https://studentweb-nqae.onrender.com/login",{
       method:"POST",
       headers:{"Content-Type":"application/json"},
       body:JSON.stringify({email,password})

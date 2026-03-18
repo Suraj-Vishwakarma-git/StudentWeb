@@ -11,7 +11,7 @@ const Signup = () => {
   const navigate=useNavigate();
   
    async function signup() {
-    const API=await fetch("http://localhost:4000/signup",{
+    const API=await fetch("https://studentweb-nqae.onrender.com/signup",{
       method:"POST",
       headers:{"Content-Type":"application/json"},
       body:JSON.stringify({name,email,password})

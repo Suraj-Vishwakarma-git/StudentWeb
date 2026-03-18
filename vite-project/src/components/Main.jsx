@@ -37,7 +37,7 @@ const Main = ({loginUser}) => {
       try {
         const token = localStorage.getItem("token");
 
-        const res = await fetch("http://localhost:4000/progress", {
+        const res = await fetch("https://studentweb-nqae.onrender.com/progress", {
           headers: {
             Authorization: `Bearer ${token}`,
           },

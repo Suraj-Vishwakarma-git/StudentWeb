@@ -22,7 +22,7 @@ const [newSubject,setNewSubject] = useState("");
 
   async function getSubjects(){
      const token = localStorage.getItem("token");
-     const API=await fetch("http://localhost:4000/allsubjects",{
+     const API=await fetch("https://studentweb-nqae.onrender.com/allsubjects",{
         headers:{
           Authorization:`Bearer ${token}`
        }
@@ -37,7 +37,7 @@ const [newSubject,setNewSubject] = useState("");
 
   async function getTopics(SubjId){
      const token = localStorage.getItem("token");
-     const API=await fetch("http://localhost:4000/alltopics",{
+     const API=await fetch("https://studentweb-nqae.onrender.com/alltopics",{
       method:"POST",
       headers:{
         "Content-Type":"application/json",
@@ -52,7 +52,7 @@ const [newSubject,setNewSubject] = useState("");
   }
 async function addSubject(subject){
   const token=localStorage.getItem("token");
-  const API=await fetch("http://localhost:4000/addsubject",{
+  const API=await fetch("https://studentweb-nqae.onrender.com/addsubject",{
     method:"POST",
     headers:{
       "Content-Type":"application/json",
@@ -67,7 +67,7 @@ async function addSubject(subject){
 
 async function addTopics() {
   const token=localStorage.getItem("token");
-  const API=await fetch("http://localhost:4000/subjecttopic",{
+  const API=await fetch("httphttps://studentweb-nqae.onrender.com/localhost:4000/subjecttopic",{
     method:"POST",
     headers:{
       "Content-Type":"application/json",
@@ -83,7 +83,7 @@ async function addTopics() {
 
 async function deleteSub(subId){
   const token=localStorage.getItem("token");
-  const API=await  fetch("http://localhost:4000/deletesubject",{
+  const API=await  fetch("https://studentweb-nqae.onrender.com/deletesubject",{
     method:"DELETE",
      headers:{
       "Content-Type":"application/json",

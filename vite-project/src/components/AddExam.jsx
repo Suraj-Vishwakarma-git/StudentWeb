@@ -19,7 +19,7 @@ const AddExam = () => {
       return;
  }
     const token=localStorage.getItem("token");
-    const API=await fetch("http://localhost:4000/examdate",{
+    const API=await fetch("https://studentweb-nqae.onrender.com/examdate",{
         method:"POST",
         headers:{
             "Content-Type":"application/json",
@@ -39,7 +39,7 @@ const AddExam = () => {
 
   async function GetAllDates(){
      const token=localStorage.getItem("token");
-    const API=await fetch("http://localhost:4000/allexam",{
+    const API=await fetch("https://studentweb-nqae.onrender.com/allexam",{
         method:"GET",
         headers:{
             "Content-Type":"application/json",
@@ -57,7 +57,7 @@ const AddExam = () => {
 
    async function DeleteDate(Id){
     const token=localStorage.getItem("token");
-    const API=await fetch("http://localhost:4000/deleteexamdate",{
+    const API=await fetch("https://studentweb-nqae.onrender.com/deleteexamdate",{
         method:"DELETE",
         headers:{
             "Content-Type":"application/json",

@@ -18,7 +18,7 @@ const Schedule = ({loginUser}) => {
     try {
       const token = localStorage.getItem("token");
 
-      const res = await fetch("http://localhost:4000/allexam", {
+      const res = await fetch("https://studentweb-nqae.onrender.com/allexam", {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -38,7 +38,7 @@ const Schedule = ({loginUser}) => {
     try {
       const token = localStorage.getItem("token");
 
-      const res = await fetch("http://localhost:4000/allsubjects", {
+      const res = await fetch("https://studentweb-nqae.onrender.com/allsubjects", {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -61,7 +61,7 @@ const Schedule = ({loginUser}) => {
     try {
       const token = localStorage.getItem("token");
 
-      const res = await fetch("http://localhost:4000/alltopics", {
+      const res = await fetch("https://studentweb-nqae.onrender.com/alltopics", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -86,7 +86,7 @@ async function Completed(Id) {
   try {
     const token = localStorage.getItem("token");
 
-    await fetch("http://localhost:4000/completedSubject", {
+    await fetch("https://studentweb-nqae.onrender.com/completedSubject", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
