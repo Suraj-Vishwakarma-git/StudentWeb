@@ -11,7 +11,6 @@ const Header = () => {
  const [userName, setUserName] = useState("");
  const [logoutModal,setLogoutModal]=useState(false);
   
-  
 
  function hamburger(){
   setcliked(!clicked);
@@ -20,12 +19,13 @@ const Header = () => {
   function logout(){
     const token = localStorage.removeItem("token");
     setUserName("");
+    window.location.reload();
   }
 
   useEffect(()=>{
     loadUser()
     window.addEventListener("userChanged", loadUser);
-
+    
   return () => {
     window.removeEventListener("userChanged", loadUser);
   };
