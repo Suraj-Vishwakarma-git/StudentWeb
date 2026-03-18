@@ -20,6 +20,7 @@ const Login = () => {
     alert(data.message);
     if(data.message==='LogedIn Successfully'){
       localStorage.setItem("token",data.token);
+      window.dispatchEvent(new Event("userChanged"));
       navigate("/homee");
     }
   }

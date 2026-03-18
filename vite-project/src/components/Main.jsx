@@ -226,7 +226,6 @@ const Main = () => {
         </div>
       </div>
 
-      {/* Quick Actions */}
       <div className="quickActions">
         <h2 id="quickmeg">Quick Actions</h2>
 

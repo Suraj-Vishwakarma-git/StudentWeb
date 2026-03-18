@@ -95,7 +95,7 @@ server.post("/login",async (req,res)=>{
     }
     const compare=await bcrypt.compare(password,user.password);
     if(!compare) return res.json({message:"Incorrect Password"});
-    const token=jwt.sign({id:user._id},JWT_SECRET,{expiresIn:"7d"});
+    const token=jwt.sign({id:user._id,name:user.name},JWT_SECRET,{expiresIn:"7d"});
     res.json({message:"LogedIn Successfully",token:token});
 });
 

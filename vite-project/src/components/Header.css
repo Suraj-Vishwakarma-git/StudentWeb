@@ -1,4 +1,126 @@
-.header{
+/* HEADER
+.header {
+    margin-top: 10px;
+    width: 100%;
+    max-width: 1200px;
+    margin-inline: auto;
+    height: 70px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 20px;
+    border-bottom: 1px solid black;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    font-size: 28px;
+    font-weight: bold;
+    text-decoration: none;
+    color: black;
+}
+
+.logo-red {
+    color: red;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: black;
+    font-size: 18px;
+}
+
+.nav {
+    display: none;
+}
+
+.userBox {
+    display: flex;
+    align-items: center;
+}
+
+.userNameLogin {
+    font-size: 14px;
+    min-height: 38px;
+    max-width: 160px;
+
+    padding: 6px 12px;
+    border-radius: 20px;
+
+    background-color: rgb(249, 99, 12);
+    color: white;
+
+    font-weight: 600;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    overflow: hidden;
+}
+
+.userText {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.hamburger {
+    display: none;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+    }
+    .hamburger {
+        display: block;
+    }
+    .nav.active {
+        position: absolute;
+        top: 130px;
+        right: 30px;
+
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+
+        padding: 20px;
+        width: 150px;
+
+        background-color: rgb(234, 236, 235);
+        border-radius: 10px;
+        border: 1px solid black;
+    }
+
+    .nav.active a {
+        text-decoration: none;
+        color: black;
+        font-size: 16px;
+    }
+
+    .userNameLogin {
+        max-width: 120px;
+        font-size: 13px;
+    }
+}
+ */
+
+
+ .header{
     display:flex;
     align-items:center;
     justify-content:space-between;
@@ -20,17 +142,40 @@
     color:black;
 }
 
+.logedInBox{
+    height:fit-content;
+    width:fit-content;
+     max-width: 120px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: rgb(61, 61, 57);
+    color: aliceblue;
+    text-align: center;
+    font-weight: 700;
+    cursor:pointer;
+     overflow: hidden;
+     white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 13px;
+}
+
 .logo-red{
     color:red;
 }
 
 .nav-links{
     display:flex;
+    z-index: 1000;
     gap:30px;
+    justify-content: center;
+    align-items: center;
 }
 
 .nav{
+    z-index: 1000;
     display:flex;
+    justify-content: center;
+    align-items: center;
     gap:25px;
 }
 
@@ -52,6 +197,60 @@
 }
 
 
+.logOUT{
+    z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.img{
+    display:flex ;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+    width: 100px;
+}
+#img{
+    height: 100px;
+    width: 100px;
+    margin-bottom: -50px;
+}
+.logoutBox{
+    height: 370px;
+    width: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 50px;
+    background-color: rgb(165, 177, 188);
+    border: 5px solid rgb(255, 26, 26);
+}
+
+.b1{
+    background-color: rgb(33, 146, 50);
+}
+.b2{
+    background-color: rgb(255, 0, 0);
+}
+
+.textttt{
+    margin: 20px;
+    font-size: larger;
+    font-weight: 800;
+}
+
+.btns{
+    margin: 30px;
+}
 
 @media (max-width:768px){
 
@@ -64,15 +263,16 @@
     }
 
    .nav {
-    position: fixed;
+    z-index: 1000;
+    position: absolute;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
     top: 130px;
     right: 25px;
-    height: 160px;
-    width: 90px;
+    height: fit-content;
+    width: 120px;
     padding: 20px;
     border: 1px solid black;
     transition: all 0.3s ease;
